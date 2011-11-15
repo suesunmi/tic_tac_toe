@@ -1,1 +1,3 @@
-By Sue Kim.  My very first tic tac toe game.  Created in November 2011 during an apprenticship under mentor Jim Suchy at 8th Light Inc.  Viva la Ruby!
+By Sue Kim.  My very first tic tac toe game.  Created in November 2011 during an apprenticeship under mentor Jim Suchy at 8th Light Inc.  Viva la Ruby!
+
+To play the game, run the play script from the command line, located inside spec/
