@@ -1,4 +1,3 @@
-require_relative 'player'
 require_relative 'board'
 
 class Game
@@ -29,6 +28,7 @@ class Game
     end
   end
   def calculate_score
-
+# loop through all combinations and determine if there is a winner
+# should the combinations be part of Board or part of this method?
   end
 end
