@@ -8,7 +8,7 @@ describe Game do
   end
   it "records the play properly" do
     @game.board.record_play(2, @player_1)
-    @game.board.grid['2'].should == @player_1.marker
+    @game.board.plays[2].marker.should == @player_1.marker
   end
   it "displays the score accurately" do
     @game.board.record_play(4, @player_2)
