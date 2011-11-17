@@ -1,13 +1,14 @@
 class Board
+  attr_reader :plays
   def initialize
-    @grid = Hash.new
-    (1..9).each { |key| @grid[key] }
+    @plays = Hash.new
+    (1..9).each { |key| @plays[key] }
   end
   def retrieve_marker(position)
-    if @grid[position].nil? then
+    if @plays[position].nil? then
       ' '
     else
-      @grid[position]
+      @plays[position].marker
     end
   end
   def display
@@ -17,6 +18,6 @@ class Board
     if position.class == String then
       position = position.to_i
     end
-    @grid[position] = player.marker
+    @plays[position] = player
   end
 end
