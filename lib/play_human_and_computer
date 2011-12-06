@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require_relative 'game'
+require_relative 'player'
+require_relative 'best_player'
+
+player_1 = BestPlayer.new("Computer", "X")
+player_2 = Player.new("Human", "O")
+game = Game.new(player_1, player_2)
+
+puts "Welcome to my special tic tac toe game!"
+while game.over? != true
+  case game.current_player
+  when BestPlayer
+    position = game.current_player.decide_next_move(game.board)
+  when Player
+    puts "#{game.current_player.name}, please select your move number:"
+    position = gets
+  else
+  end
+  game.next_play(position)
+  puts game.board.display
+end
+puts game.board.display + "Thank you for playing"
+puts "Congratulations #{game.board.winner.name}" if game.board.winner
