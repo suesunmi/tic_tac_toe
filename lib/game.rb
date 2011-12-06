@@ -8,17 +8,16 @@ class Game
     @player_2 = player_2
     @current_player = @player_1
     @current_play = 0
-    @winner
   end
   def over?
-    calculate_score
-    return true if @winner
-    @current_play >= 9
+    return true if @board.winner
+    return true if @current_play >= 9
   end
   def next_play(position)
-    @board.record_play(position, @current_player)
-    toggle_player
-    @current_play += 1
+    if @board.mark_position_with_marker(position, @current_player.marker)
+      toggle_player
+      @current_play += 1
+    end
   end
   def toggle_player
     if @current_player == @player_1 then
@@ -26,9 +25,5 @@ class Game
     elsif @current_player == @player_2 then
       @current_player = player_1
     end
-  end
-  def calculate_score
-# loop through all combinations and determine if there is a winner
-# should the combinations be part of Board or part of this method?
   end
 end
