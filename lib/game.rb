@@ -10,7 +10,7 @@ class Game
     @current_play = 0
   end
   def over?
-    return true if @board.winner
+    return true if @board.winner.empty? == false
     return true if @current_play >= 9
   end
   def next_play(position)
@@ -21,9 +21,9 @@ class Game
   end
   def toggle_player
     if @current_player == @player_1 then
-      @current_player = player_2
+      @current_player = @player_2
     elsif @current_player == @player_2 then
-      @current_player = player_1
+      @current_player = @player_1
     end
   end
 end
