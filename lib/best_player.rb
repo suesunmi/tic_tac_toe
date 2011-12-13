@@ -3,52 +3,39 @@ require_relative 'player'
 class BestPlayer < Player
 
   def decide_next_move(board)
-    opp_marker = my_opponents_mark(board)
-    choices = board.unplayed_positions
-    if choices.size <= 3 then
-      return best_choice(board, opp_marker)
-    else
-      choices.each do |position|
-        pretend = Board.new
-        pretend.update(board)
-        pretend.mark_position_with_marker(position, self.marker)
-        opp_choices = pretend.unplayed_positions
-        opp_choices.each do | opp_position |
-          pretend.mark_position_with_marker(opp_position, opp_marker)
-          return decide_next_move(pretend)
-        end
+    opponent = board.opponent(self.marker)
+    choices = Hash.new
+    board.unplayed_positions.each do |position|
+      pretend = Board.new
+      pretend.update(board)
+      pretend.mark_position_with_marker(position, self.marker)
+      choices[position] = -(best(pretend, opponent))
+    end
+    return choices.key(choices.values.max)
+  end
+
+  def best(board, node_player)
+    node_opponent = board.opponent(node_player)
+    if board.winner != ""
+      if board.winner == node_player
+        return 100
+      elsif board.winner == node_opponent
+        return -100
       end
+    elsif board.unplayed_positions.size == 0
+      return 0
     end
-  end
 
-  def best_choice(board, opp_marker)
-    scores = Hash.new
-    unplayed_positions = board.unplayed_positions
-    unplayed_positions.each do |position|
-      scores[position] = if opponent_could_win(position, board, opp_marker)
-                            rating = 10
-                          elsif i_could_win(position, board)
-                            rating = 5
-                          else
-                            rating = 0
-                          end
+    max_score = -1000
+    choices = board.unplayed_positions
+    choices.each do |position|
+      pretend = Board.new
+      pretend.update(board)
+      pretend.mark_position_with_marker(position, node_player)
+      this_score = -(best(pretend, node_opponent) + choices.size)
+      max_score = this_score if this_score > max_score
     end
-    scores_sorted = scores.sort_by { |position, rating| rating }
-    return scores_sorted.last[0]
-  end
-
-  def i_could_win(position, board)
-    hypothetical = Board.new
-    hypothetical.update(board)
-    hypothetical.mark_position_with_marker(position, self.marker)
-    hypothetical.winner == self.marker
-  end
-
-  def opponent_could_win(position, board, opponents_mark)
-    hypothetical = Board.new
-    hypothetical.update(board)
-    hypothetical.mark_position_with_marker(position, opponents_mark)
-    hypothetical.winner == opponents_mark
+    return max_score
   end
 
 end
