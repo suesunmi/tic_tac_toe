@@ -28,7 +28,7 @@ describe Board do
   it "does not record a winner after only 2 plays" do
     @board.mark_position_with_marker(2, @player_1.marker)
     @board.mark_position_with_marker(5, @player_2.marker)
-    @board.winner.should be_nil
+    @board.winner.should == ""
   end
   it "records a winner" do
     mark_multiple_positions(@board, Hash[ 2, @player_1.marker, 5, @player_2.marker, 3, @player_1.marker, 6, @player_2.marker, 1, @player_1.marker ] )
@@ -40,5 +40,9 @@ describe Board do
     other_board.update(@board)
     other_board.plays.should == @board.plays
     other_board.winner.should == @board.winner
+  end
+  it "recognizes opponent" do
+    mark_multiple_positions(@board, Hash[ 2, @player_1.marker, 5, @player_2.marker, 3, @player_1.marker, 6, @player_2.marker, 1, @player_1.marker ] )
+    @board.opponent("X").should == "O"
   end
 end
