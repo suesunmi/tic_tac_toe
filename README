@@ -1,3 +1,7 @@
 By Sue Kim.  My very first tic tac toe game.  Created in November 2011 during an apprenticeship under mentor Jim Suchy at 8th Light Inc.  Viva la Ruby!
 
-To play the game, run the play script from the command line, located inside spec/
+To play the game, run any of the following command line scripts (located in lib/)
+
+play_human_v_human
+play_computer_v_human
+play_human_v_human
